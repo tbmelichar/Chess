@@ -1,7 +1,16 @@
 #include "Piece.h"
 
-Piece::Piece(char file, char rank, char col)
+Piece::Piece(const char& file, const char& rank, const char& col)
   : location(file, rank), colour(col) {}
+
+Piece::Piece(const std::string& loc, const char& col)
+  : location(loc[0], loc[1]), colour(col) {}
+
+void Piece::print() const {
+  std::string col{"Black"};
+  if(colour == 'w') {col = "White";}
+  std::cout<<"Location: "<<location<<"\n  Colour: "<<col<<std::endl;
+}
 
 Location Piece::get_location() const {
   return location;

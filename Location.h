@@ -2,6 +2,7 @@
 #define LOCATION_H
 
 #include <string>
+#include <ostream>
 
 class Location {
 private:
@@ -10,11 +11,15 @@ private:
 
 public:
   Location() = default;
-  Location(char f = 'a', char r = '1');
+  Location(char f, char r);
+
+  std::string to_string() const;
   char get_file() const;
   char get_rank() const;
   void set_file(const char& f);
   void set_rank(const char& r);
 };
+
+std::ostream& operator<<(std::ostream& os, const Location& loc);
 
 #endif

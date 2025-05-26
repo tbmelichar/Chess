@@ -3,6 +3,8 @@
 
 #include "Location.h"
 
+#include<iostream>
+
 class Piece {
 protected:
   Location location;
@@ -10,18 +12,19 @@ protected:
 
 public:
   Piece() = default;
+  Piece(const char& file, const char& rank, const char& col);
+  Piece(const std::string& loc, const char& col);
 
-  Piece(char file, char rank, char col);
-
-  virtual ~Piece() = default;
-
+  //virtual void move_to(const Location& destination) = 0;
+  void print() const;
+  
   Location get_location() const;
   char get_colour() const;
-
+  
   void set_location(char file, char rank);
   void set_colour(char col);
-
-  virtual void move_to(const Location& destination) = 0;
+  
+  virtual ~Piece() = default;
 };
 
 #endif

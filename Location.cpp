@@ -9,6 +9,10 @@ Location::Location(char f, char r) : file(f), rank(r) {
   }
 }
 
+std::string Location::to_string() const {
+  return {file, rank};
+}
+
 char Location::get_file() const {
   return file;
 }
@@ -23,4 +27,8 @@ void Location::set_file(const char& f) {
 
 void Location::set_rank(const char& r) {
   rank = r;
+}
+
+std::ostream& operator<<(std::ostream& os, const Location& loc) {
+  return os << loc.to_string();
 }
