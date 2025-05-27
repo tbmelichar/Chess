@@ -21,9 +21,11 @@ public:
   Piece* get_piece_at(const Location& loc) const override;
   bool is_occupied(const Location& loc) const override;
   bool is_enemy_at(const Location& loc, char my_colour) const override;
+  char get_colour_at(const Location& loc) const override;
 
   // Game logic
   bool move_piece(const Location& from, const Location& to);
+  std::vector<Location> legal_moves(const Location&) const override;
 
   // Setup
   void add_piece(std::unique_ptr<Piece> piece);

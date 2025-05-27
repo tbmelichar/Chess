@@ -2,8 +2,10 @@
 #define PIECE_H
 
 #include "Location.h"
+#include "BoardView.h"
 
 #include<iostream>
+#include<vector>
 
 class Piece {
 protected:
@@ -14,10 +16,12 @@ public:
   Piece() = default;
   Piece(const char& file, const char& rank, const char& col);
   Piece(const std::string& loc, const char& col);
+  Piece(const Location& loc, const char& col);
 
   //virtual void move_to(const Location& destination) = 0;
-  void print() const;
-  char symbol() const;
+  virtual void print() const;
+  virtual char symbol() const;
+  virtual std::vector<Location> legal_moves(const BoardView& board) const = 0; 
   
   Location get_location() const;
   char get_colour() const;

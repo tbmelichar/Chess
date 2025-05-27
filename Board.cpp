@@ -26,6 +26,12 @@ bool Board::is_enemy_at(const Location& loc, char my_colour) const {
   return p && p->get_colour() != my_colour;
 }
 
+char Board::get_colour_at(const Location& loc) const {
+  Piece* p = get_piece_at(loc);
+  if(p) {return p->get_colour();}
+  return 'n';
+}
+
 void Board::add_piece(std::unique_ptr<Piece> piece) {
   Location loc = piece->get_location();
   int f = loc.get_file();
@@ -45,4 +51,10 @@ bool Board::move_piece(const Location& from, const Location& to) {
   squares[fx][fy].reset();
 
   return true;
+}
+
+std::vector<Location> Board::legal_moves(const Location& loc) const {
+  Piece* p = get_piece_at(loc);
+  p->print();
+  return p->legal_moves(*this);
 }

@@ -2,12 +2,9 @@
 #include <stdexcept>
 #include <iostream>
 
-Location::Location(const char& f, const char& r) : file(f), rank(r) {
-  if (file < 'a' || file > 'h' || rank < '1' || rank > '8') {
-    std::cerr << "Invalid location: " << file << rank << "\n";
-    std::exit(EXIT_FAILURE);
-  }
-}
+Location::Location(const char& f, const char& r) : file(f), rank(r) {}
+
+Location::Location(const size_t& f, const size_t& r) : file(f + 97), rank(r + 49) {}
 
 Location::Location(const std::string& loc) {
   if(loc.length() != 2) {
@@ -16,21 +13,26 @@ Location::Location(const std::string& loc) {
   }
   file = loc[0];
   rank = loc[1];
-  if (file < 'a' || file > 'h' || rank < '1' || rank > '8') {
-    std::cerr << "Invalid location: " << file << rank << "\n";
-    std::exit(EXIT_FAILURE);
-  }
+}
+
+bool Location::is_valid() const {
+  return (file >= 'a' && file <= 'h' && rank >= '1' && rank <= '8');
+}
+
+Location Location::add(const size_t& dx, const size_t& dy) const {
+  Location new_loc(get_file() + dx, get_rank() + dy);
+  return new_loc;
 }
 
 std::string Location::to_string() const {
   return {file, rank};
 }
 
-int Location::get_file() const {
+size_t Location::get_file() const {
   return file - 97;
 }
 
-int Location::get_rank() const {
+size_t Location::get_rank() const {
   return rank - 49;
 }
 

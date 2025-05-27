@@ -6,10 +6,14 @@ Piece::Piece(const char& file, const char& rank, const char& col)
 Piece::Piece(const std::string& loc, const char& col)
   : location(loc[0], loc[1]), colour(col) {}
 
+Piece::Piece(const Location& loc, const char& col)
+  : location(loc), colour(col) {}
+
+
 void Piece::print() const {
   std::string col{"Black"};
   if(colour == 'w') {col = "White";}
-  std::cout<<"Location: "<<location<<"\n  Colour: "<<col<<std::endl;
+  std::cout<<"Location: "<<location<<"\nColour: "<<col<<std::endl;
 }
 
 char Piece::symbol() const {
