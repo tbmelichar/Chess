@@ -20,7 +20,8 @@ public:
 
   //virtual void move_to(const Location& destination) = 0;
   virtual void print() const;
-  virtual char symbol() const;
+  virtual char symbol() const = 0;
+  virtual bool can_move_to(const Location& loc, const BoardView& board) const = 0;
   virtual std::vector<Location> legal_moves(const BoardView& board) const = 0; 
   
   Location get_location() const;

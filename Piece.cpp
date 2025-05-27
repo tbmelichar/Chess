@@ -16,10 +16,6 @@ void Piece::print() const {
   std::cout<<"Location: "<<location<<"\nColour: "<<col<<std::endl;
 }
 
-char Piece::symbol() const {
-  return '?';
-}
-
 Location Piece::get_location() const {
   return location;
 }
