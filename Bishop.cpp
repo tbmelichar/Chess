@@ -1,58 +1,46 @@
-#include "Rook.h"
+#include "Bishop.h"
 
-Rook::Rook(const char& file, const char& rank, const char& col) 
+Bishop::Bishop(const char& file, const char& rank, const char& col) 
 : Piece(file, rank, col) {
 
 }
 
-Rook::Rook(const std::string& loc, const char& col) 
+Bishop::Bishop(const std::string& loc, const char& col) 
 : Piece(loc, col) {
 
 }
 
-Rook::Rook(const Location& loc, const char& col)
+Bishop::Bishop(const Location& loc, const char& col)
 : Piece(loc, col) {
 
 }
 
-std::string Rook::symbol() const {
+std::string Bishop::symbol() const {
   char square_colour = location.get_square_colour();
-  return {(colour == square_colour) ? "♖" : "♜"};
+  return {(colour == square_colour) ? "♗" : "♝"};
 }
 
-std::string Rook::hollow_symbol() const {
-  return {"♖"};
+std::string Bishop::hollow_symbol() const {
+  return {"♗"};
 }
 
-std::string Rook::filled_symbol() const {
-  return {"♜"};
+std::string Bishop::filled_symbol() const {
+  return {"♝"};
 }
 
 
-void Rook::print() const {
-  std::cout<<"Type: Rook"<<std::endl;
+void Bishop::print() const {
+  std::cout<<"Type: Bishop"<<std::endl;
   Piece::print();
 }
 
-bool Rook::can_move_to(const Location& destination, const BoardView& board) const {
-  if(!destination.is_valid()) {return false;}
-  if(board.get_colour_at(destination) == colour) {return false;}
-  if(location.get_rank() == destination.get_rank()) {
-    for(size_t i = std::min(location.get_file(), destination.get_file())+1; i < std::max(location.get_file(), destination.get_file()); i++) {
-      if(board.is_occupied(Location(i, location.get_rank()))) {return false;}
-    }
-    return true;
-  }
-  if(location.get_file() == destination.get_file()) {
-    for(size_t i = std::min(location.get_rank(), destination.get_rank())+1; i < std::max(location.get_rank(), destination.get_rank()); i++) {
-      if(board.is_occupied(Location(location.get_file(), i))) {return false;}
-    }
-    return true;
-  }
-  return false;
+bool Bishop::can_move_to(const Location& loc, const BoardView& board) const {
+  if(!loc.is_valid()) {return false;}
+  if(board.get_colour_at(loc) == colour) {return false;}
+  return true;
 }
 
-std::vector<Location> Rook::legal_moves(const BoardView& board) const {
+std::vector<Location> Bishop::legal_moves(const BoardView& board) const {
 
   std::vector<Location> moves;
 

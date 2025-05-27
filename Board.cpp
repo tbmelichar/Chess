@@ -41,7 +41,7 @@ bool Board::move_piece(const Location& from, const Location& to) {
   int fx = from.get_file(), fy = from.get_rank();
   int tx = to.get_file(), ty = to.get_rank();
 
-  if (!squares[fx][fy]) return false;
+  if(!squares[fx][fy]) return false;
 
   // Capture: just overwrite the destination square
   squares[tx][ty] = std::move(squares[fx][fy]);

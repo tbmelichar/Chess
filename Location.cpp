@@ -24,6 +24,10 @@ Location Location::add(const size_t& dx, const size_t& dy) const {
   return new_loc;
 }
 
+std::pair<int, int> Location::diff(const Location& loc) const {
+  return {file-loc.file, rank-loc.rank};
+}
+
 char Location::get_square_colour() const {
   size_t sum = (get_file() + get_rank()) % 2;
   return {(sum == 1) ? 'w' : 'b'};

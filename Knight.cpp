@@ -34,9 +34,11 @@ void Knight::print() const {
 }
 
 bool Knight::can_move_to(const Location& loc, const BoardView& board) const {
-  if (!loc.is_valid()) {return false;}
-  if (board.get_colour_at(loc) == colour) {return false;}
-  return true;
+  if(!loc.is_valid()) {return false;}
+  if(board.get_colour_at(loc) == colour) {return false;}
+  std::pair<int, int> difference = location.diff(loc);
+  if((abs(difference.first) == 2 && abs(difference.second) == 1) || (abs(difference.first) == 1 && abs(difference.second) == 2)) {return true;}
+  return false;
 }
 
 std::vector<Location> Knight::legal_moves(const BoardView& board) const {
@@ -47,7 +49,7 @@ std::vector<Location> Knight::legal_moves(const BoardView& board) const {
 
   for (int i = 0; i < 8; ++i) {
     Location candidate = location.add(dx[i], dy[i]);
-    if(can_move_to(candidate, board)) {moves.push_back(candidate);}
+    if(candidate.is_valid() && board.get_colour_at(candidate) != colour) {moves.push_back(candidate);}
   }
 
   return moves;
