@@ -13,6 +13,7 @@ int main() {
   std::vector<Location> locs = b.legal_moves(Location("b1"));
 
   for (const Location& loc : locs) {
+    if(b.is_occupied(loc)) {std::cout<<'x';}
     std::cout << loc << std::endl;
   }
 }

@@ -10,11 +10,9 @@ public:
   Knight(const std::string& loc, const char& col);
   Knight(const Location& loc, const char& col);
 
-  // Return symbol for printing (override if needed)
   char symbol() const override;
   void print() const override;
 
-  // Return legal moves from this position using a board view
   bool can_move_to(const Location& loc, const BoardView& board) const override;
   std::vector<Location> legal_moves(const BoardView& board) const override;
 };
