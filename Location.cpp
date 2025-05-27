@@ -24,6 +24,11 @@ Location Location::add(const size_t& dx, const size_t& dy) const {
   return new_loc;
 }
 
+char Location::get_square_colour() const {
+  size_t sum = (get_file() + get_rank()) % 2;
+  return {(sum == 1) ? 'w' : 'b'};
+}
+
 std::string Location::to_string() const {
   return {file, rank};
 }
@@ -42,6 +47,10 @@ void Location::set_file(const char& f) {
 
 void Location::set_rank(const char& r) {
   rank = r;
+}
+
+bool Location::operator==(const Location& other) const {
+  return file == other.file && rank == other.rank;
 }
 
 std::ostream& operator<<(std::ostream& os, const Location& loc) {

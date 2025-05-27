@@ -1,14 +1,14 @@
-#ifndef KNIGHT_H
-#define KNIGHT_H
+#ifndef ROOK_H
+#define ROOK_H
 
 #include "Piece.h"
 
-class Knight : public Piece {
+class Rook : public Piece {
 public:
-  Knight() = default;
-  Knight(const char& file, const char& rank, const char& col);
-  Knight(const std::string& loc, const char& col);
-  Knight(const Location& loc, const char& col);
+  Rook() = default;
+  Rook(const char& file, const char& rank, const char& col);
+  Rook(const std::string& loc, const char& col);
+  Rook(const Location& loc, const char& col);
 
   std::string symbol() const override;
   std::string hollow_symbol() const override;

@@ -15,8 +15,17 @@ Knight::Knight(const Location& loc, const char& col)
 
 }
 
-char Knight::symbol() const {
-  return 'k';
+std::string Knight::symbol() const {
+  char square_colour = location.get_square_colour();
+  return {(colour == square_colour) ? "♘" : "♞"};
+}
+
+std::string Knight::hollow_symbol() const {
+  return {"♘"};
+}
+
+std::string Knight::filled_symbol() const {
+  return {"♞"};
 }
 
 void Knight::print() const {

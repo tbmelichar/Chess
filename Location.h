@@ -18,12 +18,14 @@ public:
   bool is_valid() const;
 
   Location add(const size_t& dx, const size_t& dy) const;
+  char get_square_colour() const;
 
   std::string to_string() const;
   size_t get_file() const;
   size_t get_rank() const;
   void set_file(const char& f);
   void set_rank(const char& r);
+  bool operator==(const Location& other) const;
 };
 
 std::ostream& operator<<(std::ostream& os, const Location& loc);
