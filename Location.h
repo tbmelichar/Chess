@@ -11,11 +11,12 @@ private:
 
 public:
   Location() = default;
-  Location(char f, char r);
+  Location(const char& f, const char& r);
+  Location(const std::string& loc);
 
   std::string to_string() const;
-  char get_file() const;
-  char get_rank() const;
+  int get_file() const;
+  int get_rank() const;
   void set_file(const char& f);
   void set_rank(const char& r);
 };
