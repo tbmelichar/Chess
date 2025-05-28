@@ -1,4 +1,8 @@
 #include "Board.h"
+#include "Rook.h"
+#include "Knight.h"
+#include "Bishop.h"
+#include "Queen.h"
 
 #include <algorithm>
 
@@ -10,6 +14,26 @@ const std::string Board::white = "\033[37m";            // just white foreground
 const std::string Board::black = "\033[30m";            // just black foreground
 const std::string Board::selected = "\033[32m";         // just green foreground
 const std::string Board::capturable = "\033[31m";       // just red foreground
+
+Board::Board() {
+  add_piece(std::make_unique<Rook>(Location("a1"), 'w'));
+  add_piece(std::make_unique<Knight>(Location("b1"), 'w'));
+  add_piece(std::make_unique<Bishop>(Location("c1"), 'w'));
+  add_piece(std::make_unique<Queen>(Location("d1"), 'w'));
+  add_piece(std::make_unique<Queen>(Location("e1"), 'w'));
+  add_piece(std::make_unique<Bishop>(Location("f1"), 'w'));
+  add_piece(std::make_unique<Knight>(Location("g1"), 'w'));
+  add_piece(std::make_unique<Rook>(Location("h1"), 'w'));
+
+  add_piece(std::make_unique<Rook>(Location("a8"), 'b'));
+  add_piece(std::make_unique<Knight>(Location("b8"), 'b'));
+  add_piece(std::make_unique<Bishop>(Location("c8"), 'b'));
+  add_piece(std::make_unique<Queen>(Location("d8"), 'b'));
+  add_piece(std::make_unique<Queen>(Location("e8"), 'b'));
+  add_piece(std::make_unique<Bishop>(Location("f8"), 'b'));
+  add_piece(std::make_unique<Knight>(Location("g8"), 'b'));
+  add_piece(std::make_unique<Rook>(Location("h8"), 'b'));
+}
 
 Piece* Board::get_piece_at(const Location& loc) const {
   return squares[loc.get_file()][loc.get_rank()].get();  // Return raw pointer
@@ -51,7 +75,7 @@ bool Board::move_piece(const Location& from, const Location& to) {
   return true;
 }
 
-void Board::print() const {
+void Board::show() const {
   for (int rank = 7; rank >= 0; --rank) {
     std::cout<<rank + 1<<" ";
     for (int file = 0; file < 8; ++file) {
@@ -74,8 +98,8 @@ std::vector<Location> Board::legal_moves(const Location& loc) const {
   return p->legal_moves(*this);
 }
 
-void Board::print_legal_moves(const Location& loc) const {
-  if(!is_occupied(loc)) return print();
+void Board::show_legal_moves(const Location& loc) const {
+  if(!is_occupied(loc)) return show();
   std::vector<Location> moves = legal_moves(loc);
 
   for (int rank = 7; rank >= 0; rank--) {
@@ -98,4 +122,15 @@ void Board::print_legal_moves(const Location& loc) const {
     std::cout<<std::endl;
   }
   std::cout<<"   a  b  c  d  e  f  g  h\n";
+}
+
+void Board::print_legal_moves(const Location& loc) const {
+  Piece* p = get_piece_at(loc);
+  if(!p) {return;}
+  for(int i = 0; i < 8; i++) {
+    for(int j = 0; j < 8; j++) {
+      Location test(i, j);
+      if(p->can_move_to(test, *this)) {std::cout<<test<<", ";}
+    }
+  }
 }

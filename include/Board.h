@@ -19,10 +19,10 @@ private:
   static const std::string capturable;
 
 public:
-  Board() = default;
+  Board();
   ~Board() = default;
 
-  void print() const;
+  void show() const;
 
   // Functions available to pieces
   Piece* get_piece_at(const Location& loc) const override;
@@ -33,6 +33,7 @@ public:
   // Game logic
   bool move_piece(const Location& from, const Location& to);
   std::vector<Location> legal_moves(const Location& loc) const override;
+  void show_legal_moves(const Location& loc) const;
   void print_legal_moves(const Location& loc) const;
 
   // Setup
