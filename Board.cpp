@@ -54,7 +54,7 @@ bool Board::move_piece(const Location& from, const Location& to) {
 void Board::print() const {
   for (int rank = 7; rank >= 0; --rank) {
     std::cout<<rank + 1<<" ";
-    for (size_t file = 0; file < 8; ++file) {
+    for (int file = 0; file < 8; ++file) {
       Location current(file, rank);
       Piece* p = squares[file][rank].get();  // Access raw pointer
       std::string piece_colour(white); 
@@ -80,7 +80,7 @@ void Board::print_legal_moves(const Location& loc) const {
 
   for (int rank = 7; rank >= 0; rank--) {
     std::cout<<rank + 1<<" ";
-    for (size_t file = 0; file < 8; ++file) {
+    for (int file = 0; file < 8; ++file) {
       Location current(file, rank);
       Piece* p = squares[file][rank].get();
       std::string symbol(p ? p->symbol() : " ");

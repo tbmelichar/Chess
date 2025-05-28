@@ -33,18 +33,17 @@ void Knight::print() const {
   Piece::print();
 }
 
-bool Knight::can_move_to(const Location& loc, const BoardView& board) const {
-  if(!loc.is_valid()) {return false;}
-  if(board.get_colour_at(loc) == colour) {return false;}
-  std::pair<int, int> difference = location.diff(loc);
+bool Knight::can_move_to(const Location& destination, const BoardView& board) const {
+  if(!Piece::can_move_to(destination, board)) {return false;}
+  std::pair<int, int> difference = location.diff(destination);
   if((abs(difference.first) == 2 && abs(difference.second) == 1) || (abs(difference.first) == 1 && abs(difference.second) == 2)) {return true;}
   return false;
 }
 
 std::vector<Location> Knight::legal_moves(const BoardView& board) const {
-  static const int dx[8] = {1, 2, 2, 1, -1, -2, -2, -1};
-  static const int dy[8] = {2, 1, -1, -2, -2, -1, 1, 2};
-
+  static const int dx[8] = {1,  1,  2,  2, -1, -1, -2, -2};
+  static const int dy[8] = {2, -2,  1, -1,  2, -2,  1, -1};
+ 
   std::vector<Location> moves;
 
   for (int i = 0; i < 8; ++i) {

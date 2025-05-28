@@ -35,63 +35,33 @@ void Rook::print() const {
 }
 
 bool Rook::can_move_to(const Location& destination, const BoardView& board) const {
-  if(!destination.is_valid()) {return false;}
-  if(board.get_colour_at(destination) == colour) {return false;}
-  if(location.get_rank() == destination.get_rank()) {
-    for(size_t i = std::min(location.get_file(), destination.get_file())+1; i < std::max(location.get_file(), destination.get_file()); i++) {
-      if(board.is_occupied(Location(i, location.get_rank()))) {return false;}
-    }
-    return true;
+  if(!Piece::can_move_to(destination, board)) return false;
+
+  int file_diff = destination.get_file() - location.get_file();
+  int rank_diff = destination.get_rank() - location.get_rank();
+
+  // Ensure movement is straight
+  if(file_diff != 0 && rank_diff != 0) return false;
+
+  int file_step = (file_diff == 0) ? 0 : file_diff / abs(file_diff);
+  int rank_step = (rank_diff == 0) ? 0 : rank_diff / abs(rank_diff);
+
+  Location current(location.get_file() + file_step, location.get_rank() + rank_step);
+
+  // Check each square along the path for obstructions
+  while(current != destination) {
+    if(board.is_occupied(current)) return false;
+    current.add_in_place(file_step, rank_step);
   }
-  if(location.get_file() == destination.get_file()) {
-    for(size_t i = std::min(location.get_rank(), destination.get_rank())+1; i < std::max(location.get_rank(), destination.get_rank()); i++) {
-      if(board.is_occupied(Location(location.get_file(), i))) {return false;}
-    }
-    return true;
-  }
-  return false;
+
+  return true;
 }
 
 std::vector<Location> Rook::legal_moves(const BoardView& board) const {
-
   std::vector<Location> moves;
-
-  for (int i = location.get_file()+1; i < 8; i++) {
-    Location candidate(i, location.get_rank());
-    char candidate_colour = board.get_colour_at(candidate);
-    if(candidate_colour == 'n') {moves.push_back(candidate);}
-    else {
-      if(candidate_colour != colour) {moves.push_back(candidate);}
-      break;
-    }
-  }
-  for (int i = location.get_file()-1; i >= 0; i--) {
-    Location candidate(i, location.get_rank());
-    char candidate_colour = board.get_colour_at(candidate);
-    if(candidate_colour == 'n') {moves.push_back(candidate);}
-    else {
-      if(candidate_colour != colour) {moves.push_back(candidate);}
-      break;
-    }
-  }
-  for (int i = location.get_rank()+1; i < 8; i++) {
-    Location candidate(location.get_file(), i);
-    char candidate_colour = board.get_colour_at(candidate);
-    if(candidate_colour == 'n') {moves.push_back(candidate);}
-    else {
-      if(candidate_colour != colour) {moves.push_back(candidate);}
-      break;
-    }
-  }
-  for (int i = location.get_rank()-1; i >= 0; i--) {
-    Location candidate(location.get_file(), i);
-    char candidate_colour = board.get_colour_at(candidate);
-    if(candidate_colour == 'n') {moves.push_back(candidate);}
-    else {
-      if(candidate_colour != colour) {moves.push_back(candidate);}
-      break;
-    }
-  }
-  
+  add_sliding_moves(1, 0, moves, board);
+  add_sliding_moves(-1, 0, moves, board);
+  add_sliding_moves(0, 1, moves, board);
+  add_sliding_moves(0, -1, moves, board);
   return moves;
 }

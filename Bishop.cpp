@@ -34,52 +34,33 @@ void Bishop::print() const {
   Piece::print();
 }
 
-bool Bishop::can_move_to(const Location& loc, const BoardView& board) const {
-  if(!loc.is_valid()) {return false;}
-  if(board.get_colour_at(loc) == colour) {return false;}
+bool Bishop::can_move_to(const Location& destination, const BoardView& board) const {
+  if(!Piece::can_move_to(destination, board)) {return false;}
+
+  int file_diff = destination.get_file() - location.get_file();
+  int rank_diff = destination.get_rank() - location.get_rank();
+
+  if(abs(file_diff) != abs(rank_diff)) {return false;}
+
+  int file_step = file_diff / abs(file_diff);
+  int rank_step = rank_diff / abs(rank_diff);
+
+  Location current(location.get_file() + file_step, location.get_rank() + rank_step);
+
+  // Check each square along diagonal for obstructions
+  while(current != destination) {
+    if(board.is_occupied(current)) {return false;}
+    current.add_in_place(file_step, rank_step);
+  }
+
   return true;
 }
 
 std::vector<Location> Bishop::legal_moves(const BoardView& board) const {
-
   std::vector<Location> moves;
-
-  for (int i = location.get_file()+1; i < 8; i++) {
-    Location candidate(i, location.get_rank());
-    char candidate_colour = board.get_colour_at(candidate);
-    if(candidate_colour == 'n') {moves.push_back(candidate);}
-    else {
-      if(candidate_colour != colour) {moves.push_back(candidate);}
-      break;
-    }
-  }
-  for (int i = location.get_file()-1; i >= 0; i--) {
-    Location candidate(i, location.get_rank());
-    char candidate_colour = board.get_colour_at(candidate);
-    if(candidate_colour == 'n') {moves.push_back(candidate);}
-    else {
-      if(candidate_colour != colour) {moves.push_back(candidate);}
-      break;
-    }
-  }
-  for (int i = location.get_rank()+1; i < 8; i++) {
-    Location candidate(location.get_file(), i);
-    char candidate_colour = board.get_colour_at(candidate);
-    if(candidate_colour == 'n') {moves.push_back(candidate);}
-    else {
-      if(candidate_colour != colour) {moves.push_back(candidate);}
-      break;
-    }
-  }
-  for (int i = location.get_rank()-1; i >= 0; i--) {
-    Location candidate(location.get_file(), i);
-    char candidate_colour = board.get_colour_at(candidate);
-    if(candidate_colour == 'n') {moves.push_back(candidate);}
-    else {
-      if(candidate_colour != colour) {moves.push_back(candidate);}
-      break;
-    }
-  }
-  
+  add_sliding_moves(1, 1, moves, board);
+  add_sliding_moves(-1, 1, moves, board);
+  add_sliding_moves(-1, -1, moves, board);
+  add_sliding_moves(1, -1, moves, board);
   return moves;
 }

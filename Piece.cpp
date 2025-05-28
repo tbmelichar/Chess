@@ -16,6 +16,25 @@ void Piece::print() const {
   std::cout<<"Location: "<<location<<"\nColour: "<<col<<std::endl;
 }
 
+bool Piece::can_move_to(const Location& destination, const BoardView& board) const {
+  if(!destination.is_valid()) {return false;}
+  if(board.get_colour_at(destination) == colour) {return false;}
+  return true;
+}
+
+void Piece::add_sliding_moves(const int& dx, const int& dy, std::vector<Location>& moves, const BoardView& board) const {
+  Location candidate(location.get_file() + dx, location.get_rank() + dy);
+  while(candidate.is_valid()) {
+    char candidate_colour = board.get_colour_at(candidate);
+    if(candidate_colour == 'n') {moves.push_back(candidate);}
+    else {
+      if(candidate_colour != colour) {moves.push_back(candidate);}
+      return;
+    }
+    candidate.add_in_place(dx, dy);
+  }
+}
+
 Location Piece::get_location() const {
   return location;
 }

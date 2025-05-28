@@ -23,9 +23,10 @@ public:
   virtual std::string symbol() const = 0;
   virtual std::string hollow_symbol() const = 0;
   virtual std::string filled_symbol() const = 0;
-  virtual bool can_move_to(const Location& loc, const BoardView& board) const = 0;
   virtual std::vector<Location> legal_moves(const BoardView& board) const = 0; 
   
+  virtual bool can_move_to(const Location& destination, const BoardView& board) const;
+  void add_sliding_moves(const int& dx, const int& dy, std::vector<Location>& moves, const BoardView& board) const;
   Location get_location() const;
   char get_colour() const;
   

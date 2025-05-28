@@ -15,7 +15,7 @@ public:
   std::string filled_symbol() const override;
   void print() const override;
 
-  bool can_move_to(const Location& loc, const BoardView& board) const override;
+  bool can_move_to(const Location& destination, const BoardView& board) const override;
   std::vector<Location> legal_moves(const BoardView& board) const override;
 };
 
