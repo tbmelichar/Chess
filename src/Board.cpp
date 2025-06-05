@@ -3,6 +3,7 @@
 #include "Knight.h"
 #include "Bishop.h"
 #include "Queen.h"
+#include "King.h"
 #include "Pawn.h"
 
 #include <algorithm>
@@ -21,7 +22,7 @@ Board::Board() {
   add_piece(std::make_unique<Knight>(Location("b1"), 'w'));
   add_piece(std::make_unique<Bishop>(Location("c1"), 'w'));
   add_piece(std::make_unique<Queen>(Location("d1"), 'w'));
-  add_piece(std::make_unique<Queen>(Location("e1"), 'w'));
+  add_piece(std::make_unique<King>(Location("e1"), 'w'));
   add_piece(std::make_unique<Bishop>(Location("f1"), 'w'));
   add_piece(std::make_unique<Knight>(Location("g1"), 'w'));
   add_piece(std::make_unique<Rook>(Location("h1"), 'w'));
@@ -29,7 +30,7 @@ Board::Board() {
   add_piece(std::make_unique<Knight>(Location("b8"), 'b'));
   add_piece(std::make_unique<Bishop>(Location("c8"), 'b'));
   add_piece(std::make_unique<Queen>(Location("d8"), 'b'));
-  add_piece(std::make_unique<Queen>(Location("e8"), 'b'));
+  add_piece(std::make_unique<King>(Location("e8"), 'b'));
   add_piece(std::make_unique<Bishop>(Location("f8"), 'b'));
   add_piece(std::make_unique<Knight>(Location("g8"), 'b'));
   add_piece(std::make_unique<Rook>(Location("h8"), 'b'));
