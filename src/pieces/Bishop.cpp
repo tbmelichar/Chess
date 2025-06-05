@@ -15,6 +15,10 @@ Bishop::Bishop(const Location& loc, const char& col)
 
 }
 
+Bishop::~Bishop() {
+  Piece::~Piece();
+}
+
 std::string Bishop::symbol() const {
   char square_colour = location.get_square_colour();
   return {(colour == square_colour) ? "♗" : "♝"};

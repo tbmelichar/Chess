@@ -13,6 +13,7 @@ public:
   virtual bool is_enemy_at(const Location& loc, char my_colour) const = 0;
   virtual char get_colour_at(const Location& loc) const = 0;
   virtual std::vector<Location> legal_moves(const Location&) const = 0;
+  virtual size_t get_move_number() const = 0;
 
   virtual ~BoardView() = default;
 };

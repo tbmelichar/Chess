@@ -1,15 +1,19 @@
-#ifndef KNIGHT_H
-#define KNIGHT_H
+#ifndef PAWN_H
+#define PAWN_H
 
 #include "Piece.h"
 
-class Knight : public Piece {
+class Pawn : public Piece {
+private:
+  bool has_moved{false};
+  bool can_en_passent_left{false};
+  bool can_en_passent_right{false};
 public:
-  Knight() = default;
-  Knight(const char& file, const char& rank, const char& col);
-  Knight(const std::string& loc, const char& col);
-  Knight(const Location& loc, const char& col);
-  ~Knight() override;
+  Pawn() = default;
+  Pawn(const char& file, const char& rank, const char& col);
+  Pawn(const std::string& loc, const char& col);
+  Pawn(const Location& loc, const char& col);
+  ~Pawn() override;
 
   std::string symbol() const override;
   std::string hollow_symbol() const override;

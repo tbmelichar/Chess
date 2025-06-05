@@ -10,6 +10,7 @@
 class Board : public BoardView {
 private:
   std::unique_ptr<Piece> squares[8][8];
+  size_t move_number{1};
   static const std::string reset;
   static const std::string white_background;
   static const std::string white;
@@ -29,6 +30,9 @@ public:
   bool is_occupied(const Location& loc) const override;
   bool is_enemy_at(const Location& loc, char my_colour) const override;
   char get_colour_at(const Location& loc) const override;
+  size_t get_move_number() const override;
+
+  void set_move_number(const size_t& num);
 
   // Game logic
   bool move_piece(const Location& from, const Location& to);

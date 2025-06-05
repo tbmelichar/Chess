@@ -9,6 +9,7 @@ public:
   Rook(const char& file, const char& rank, const char& col);
   Rook(const std::string& loc, const char& col);
   Rook(const Location& loc, const char& col);
+  ~Rook() override;
 
   std::string symbol() const override;
   std::string hollow_symbol() const override;

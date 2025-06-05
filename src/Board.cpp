@@ -3,6 +3,7 @@
 #include "Knight.h"
 #include "Bishop.h"
 #include "Queen.h"
+#include "Pawn.h"
 
 #include <algorithm>
 
@@ -24,7 +25,6 @@ Board::Board() {
   add_piece(std::make_unique<Bishop>(Location("f1"), 'w'));
   add_piece(std::make_unique<Knight>(Location("g1"), 'w'));
   add_piece(std::make_unique<Rook>(Location("h1"), 'w'));
-
   add_piece(std::make_unique<Rook>(Location("a8"), 'b'));
   add_piece(std::make_unique<Knight>(Location("b8"), 'b'));
   add_piece(std::make_unique<Bishop>(Location("c8"), 'b'));
@@ -33,6 +33,18 @@ Board::Board() {
   add_piece(std::make_unique<Bishop>(Location("f8"), 'b'));
   add_piece(std::make_unique<Knight>(Location("g8"), 'b'));
   add_piece(std::make_unique<Rook>(Location("h8"), 'b'));
+
+  for(char file('a'); file <= 'h'; file++) {
+    add_piece(std::make_unique<Pawn>(Location(file, '2'), 'w'));
+    add_piece(std::make_unique<Pawn>(Location(file, '7'), 'b'));
+  }
+}
+
+void Board::add_piece(std::unique_ptr<Piece> piece) {
+  Location loc = piece->get_location();
+  int f = loc.get_file();
+  int r = loc.get_rank();
+  squares[f][r] = std::move(piece);  // Transfer ownership
 }
 
 Piece* Board::get_piece_at(const Location& loc) const {
@@ -54,18 +66,16 @@ char Board::get_colour_at(const Location& loc) const {
   return 'n';
 }
 
-void Board::add_piece(std::unique_ptr<Piece> piece) {
-  Location loc = piece->get_location();
-  int f = loc.get_file();
-  int r = loc.get_rank();
-  squares[f][r] = std::move(piece);  // Transfer ownership
+size_t Board::get_move_number() const {
+  return move_number;
 }
 
 bool Board::move_piece(const Location& from, const Location& to) {
   int fx = from.get_file(), fy = from.get_rank();
   int tx = to.get_file(), ty = to.get_rank();
 
-  if(!squares[fx][fy]) return false;
+  if(!squares[fx][fy]) {return false;}
+  if(!squares[fx][fy]->can_move_to(to, *this)) {return false;}
 
   // Capture: just overwrite the destination square
   squares[tx][ty] = std::move(squares[fx][fy]);
@@ -134,3 +144,5 @@ void Board::print_legal_moves(const Location& loc) const {
     }
   }
 }
+
+void Board::set_move_number(const size_t& num) {move_number = num;}

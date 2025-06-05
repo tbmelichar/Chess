@@ -15,6 +15,12 @@ Location::Location(const std::string& loc) {
   rank = loc[1];
 }
 
+Location::Location(const Location& loc) {
+  file = loc.file;
+  rank = loc.rank;
+}
+
+
 bool Location::is_valid() const {
   return (file >= 'a' && file <= 'h' && rank >= '1' && rank <= '8');
 }
@@ -43,11 +49,11 @@ std::string Location::to_string() const {
 }
 
 int Location::get_file() const {
-  return file - 97;
+  return file - 'a';
 }
 
 int Location::get_rank() const {
-  return rank - 49;
+  return rank - '1';
 }
 
 void Location::set_file(const char& f) {
@@ -64,6 +70,11 @@ bool Location::operator==(const Location& other) const {
 
 bool Location::operator!=(const Location& other) const {
   return !(operator==(other));
+}
+
+void Location::operator=(const Location& other) {
+  file = other.file;
+  rank = other.rank;
 }
 
 std::ostream& operator<<(std::ostream& os, const Location& loc) {

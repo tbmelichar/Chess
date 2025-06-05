@@ -15,6 +15,10 @@ Knight::Knight(const Location& loc, const char& col)
 
 }
 
+Knight::~Knight() {
+  Piece::~Piece();
+}
+
 std::string Knight::symbol() const {
   char square_colour = location.get_square_colour();
   return {(colour == square_colour) ? "♘" : "♞"};

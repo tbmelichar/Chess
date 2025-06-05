@@ -14,6 +14,8 @@ public:
   Location(const char& f, const char& r);
   Location(const int& f, const int& r);
   Location(const std::string& loc);
+  Location(const Location& loc);
+  ~Location() = default;
 
   bool is_valid() const;
 
@@ -29,6 +31,7 @@ public:
   void set_rank(const char& r);
   bool operator==(const Location& other) const;
   bool operator!=(const Location& other) const;
+  void operator=(const Location& other);
 };
 
 std::ostream& operator<<(std::ostream& os, const Location& loc);

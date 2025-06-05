@@ -15,6 +15,10 @@ Rook::Rook(const Location& loc, const char& col)
 
 }
 
+Rook::~Rook() {
+  Piece::~Piece();
+}
+
 std::string Rook::symbol() const {
   char square_colour = location.get_square_colour();
   return {(colour == square_colour) ? "♖" : "♜"};

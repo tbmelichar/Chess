@@ -9,6 +9,11 @@ Piece::Piece(const std::string& loc, const char& col)
 Piece::Piece(const Location& loc, const char& col)
   : location(loc), colour(col) {}
 
+bool Piece::move_to(const Location& destination, const BoardView& board) {
+  if(!can_move_to(destination, board)) {return false;}
+  location = destination;
+  return true;
+}
 
 void Piece::print() const {
   std::string col{"Black"};
@@ -17,6 +22,7 @@ void Piece::print() const {
 }
 
 bool Piece::can_move_to(const Location& destination, const BoardView& board) const {
+  //if(colour == (board.get_move_number() % 2 == 1 ? 'b' : 'w')) {return false;}
   if(!destination.is_valid()) {return false;}
   if(board.get_colour_at(destination) == colour) {return false;}
   return true;

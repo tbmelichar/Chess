@@ -15,6 +15,10 @@ Queen::Queen(const Location& loc, const char& col)
 
 }
 
+Queen::~Queen() {
+  Piece::~Piece();
+}
+
 std::string Queen::symbol() const {
   char square_colour = location.get_square_colour();
   return {(colour == square_colour) ? "♕" : "♛"};

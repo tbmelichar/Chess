@@ -18,7 +18,7 @@ public:
   Piece(const std::string& loc, const char& col);
   Piece(const Location& loc, const char& col);
 
-  //virtual void move_to(const Location& destination) = 0;
+  virtual bool move_to(const Location& destination, const BoardView& board);
   virtual void print() const;
   virtual std::string symbol() const = 0;
   virtual std::string hollow_symbol() const = 0;
@@ -27,6 +27,7 @@ public:
   
   virtual bool can_move_to(const Location& destination, const BoardView& board) const;
   void add_sliding_moves(const int& dx, const int& dy, std::vector<Location>& moves, const BoardView& board) const;
+
   Location get_location() const;
   char get_colour() const;
   
@@ -34,7 +35,7 @@ public:
   void set_location(const Location& loc);
   void set_colour(const char& col);
   
-  virtual ~Piece() = default;
+  virtual ~Piece() {};
 };
 
 #endif
