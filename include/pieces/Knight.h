@@ -12,8 +12,8 @@ public:
   ~Knight() override;
 
   std::string symbol() const override;
-  std::string hollow_symbol() const override;
-  std::string filled_symbol() const override;
+  std::string get_hollow_symbol() const override;
+  std::string get_filled_symbol() const override;
   void print() const override;
 
   bool can_move_to(const Location& destination, const BoardView& board) const override;

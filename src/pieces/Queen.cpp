@@ -24,11 +24,11 @@ std::string Queen::symbol() const {
   return {(colour == square_colour) ? "♕" : "♛"};
 }
 
-std::string Queen::hollow_symbol() const {
+std::string Queen::get_hollow_symbol() const {
   return {"♕"};
 }
 
-std::string Queen::filled_symbol() const {
+std::string Queen::get_filled_symbol() const {
   return {"♛"};
 }
 

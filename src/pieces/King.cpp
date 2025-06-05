@@ -24,11 +24,11 @@ std::string King::symbol() const {
   return {(colour == square_colour) ? "♔" : "♚"};
 }
 
-std::string King::hollow_symbol() const {
+std::string King::get_hollow_symbol() const {
   return {"♔"};
 }
 
-std::string King::filled_symbol() const {
+std::string King::get_filled_symbol() const {
   return {"♚"};
 }
 
@@ -61,4 +61,8 @@ std::vector<Location> King::legal_moves(const BoardView& board) const {
   }
 
   return moves;
+}
+
+bool King::in_check_from_rook(const BoardView& board) const {
+
 }

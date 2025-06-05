@@ -24,11 +24,11 @@ std::string Knight::symbol() const {
   return {(colour == square_colour) ? "♘" : "♞"};
 }
 
-std::string Knight::hollow_symbol() const {
+std::string Knight::get_hollow_symbol() const {
   return {"♘"};
 }
 
-std::string Knight::filled_symbol() const {
+std::string Knight::get_filled_symbol() const {
   return {"♞"};
 }
 

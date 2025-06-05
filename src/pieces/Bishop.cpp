@@ -24,11 +24,11 @@ std::string Bishop::symbol() const {
   return {(colour == square_colour) ? "♗" : "♝"};
 }
 
-std::string Bishop::hollow_symbol() const {
+std::string Bishop::get_hollow_symbol() const {
   return {"♗"};
 }
 
-std::string Bishop::filled_symbol() const {
+std::string Bishop::get_filled_symbol() const {
   return {"♝"};
 }
 

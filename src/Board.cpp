@@ -56,7 +56,7 @@ bool Board::is_occupied(const Location& loc) const {
   return get_piece_at(loc) != nullptr;
 }
 
-bool Board::is_enemy_at(const Location& loc, char my_colour) const {
+bool Board::is_enemy_at(const Location& loc, const char& my_colour) const {
   Piece* p = get_piece_at(loc);
   return p && p->get_colour() != my_colour;
 }
@@ -103,6 +103,55 @@ void Board::show() const {
   std::cout<<"   a  b  c  d  e  f  g  h\n";
 }
 
+bool Board::is_enemy_rook_at(const Location& loc, const char& my_colour) const {
+  Piece* p = get_piece_at(loc);
+  if(!p) {return false;}
+  if(p->get_colour() == my_colour) {return false;}
+  if(p->get_hollow_symbol() == "♖") {return true;}
+  return false;
+}
+
+bool Board::is_enemy_knight_at(const Location& loc, const char& my_colour) const {
+  Piece* p = get_piece_at(loc);
+  if(!p) {return false;}
+  if(p->get_colour() == my_colour) {return false;}
+  if(p->get_hollow_symbol() == "♘") {return true;}
+  return false;
+}
+
+bool Board::is_enemy_bishop_at(const Location& loc, const char& my_colour) const {
+  Piece* p = get_piece_at(loc);
+  if(!p) {return false;}
+  if(p->get_colour() == my_colour) {return false;}
+  if(p->get_hollow_symbol() == "♗") {return true;}
+  return false;
+}
+
+bool Board::is_enemy_queen_at(const Location& loc, const char& my_colour) const {
+  Piece* p = get_piece_at(loc);
+  if(!p) {return false;}
+  if(p->get_colour() == my_colour) {return false;}
+  if(p->get_hollow_symbol() == "♕") {return true;}
+  return false;
+}
+
+bool Board::is_enemy_king_at(const Location& loc, const char& my_colour) const {
+  Piece* p = get_piece_at(loc);
+  if(!p) {return false;}
+  if(p->get_colour() == my_colour) {return false;}
+  if(p->get_hollow_symbol() == "♔") {return true;}
+  return false;
+}
+
+bool Board::is_enemy_pawn_at(const Location& loc, const char& my_colour) const {
+  Piece* p = get_piece_at(loc);
+  if(!p) {return false;}
+  if(p->get_colour() == my_colour) {return false;}
+  if(p->get_hollow_symbol() == "♙") {return true;}
+  return false;
+}
+
+
 std::vector<Location> Board::legal_moves(const Location& loc) const {
   Piece* p = get_piece_at(loc);
   if(!p) {return {};}
@@ -123,9 +172,9 @@ void Board::show_legal_moves(const Location& loc) const {
       std::string square_colour(black_background);
       if(current.get_square_colour() == 'w') {piece_colour = black; square_colour = white_background;}
 
-      if(loc == current) {symbol = p->filled_symbol(); piece_colour = selected;} // Selected piece
+      if(loc == current) {symbol = p->get_filled_symbol(); piece_colour = selected;} // Selected piece
       else if(std::find(moves.begin(), moves.end(), current) != moves.end()) {
-        if(p) {symbol = p->filled_symbol(); piece_colour = capturable;} // Capturable piece
+        if(p) {symbol = p->get_filled_symbol(); piece_colour = capturable;} // Capturable piece
         else {symbol = "•";} // Legal empty square
       }
       std::cout<<square_colour<<piece_colour<<" "<<symbol<<" "<<reset;

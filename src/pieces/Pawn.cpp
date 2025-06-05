@@ -24,11 +24,11 @@ std::string Pawn::symbol() const {
   return {(colour == square_colour) ? "♙" : "♟"};
 }
 
-std::string Pawn::hollow_symbol() const {
+std::string Pawn::get_hollow_symbol() const {
   return {"♙"};
 }
 
-std::string Pawn::filled_symbol() const {
+std::string Pawn::get_filled_symbol() const {
   return {"♟"};
 }
 

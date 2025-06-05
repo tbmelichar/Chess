@@ -24,11 +24,11 @@ std::string Rook::symbol() const {
   return {(colour == square_colour) ? "♖" : "♜"};
 }
 
-std::string Rook::hollow_symbol() const {
+std::string Rook::get_hollow_symbol() const {
   return {"♖"};
 }
 
-std::string Rook::filled_symbol() const {
+std::string Rook::get_filled_symbol() const {
   return {"♜"};
 }
 
@@ -50,15 +50,7 @@ bool Rook::can_move_to(const Location& destination, const BoardView& board) cons
   int file_step = (file_diff == 0) ? 0 : file_diff / abs(file_diff);
   int rank_step = (rank_diff == 0) ? 0 : rank_diff / abs(rank_diff);
 
-  Location current(location.get_file() + file_step, location.get_rank() + rank_step);
-
-  // Check each square along the path for obstructions
-  while(current != destination) {
-    if(board.is_occupied(current)) return false;
-    current.add_in_place(file_step, rank_step);
-  }
-
-  return true;
+  return check_sliding_move(destination, file_step, rank_step, board);
 }
 
 std::vector<Location> Rook::legal_moves(const BoardView& board) const {

@@ -41,6 +41,15 @@ void Piece::add_sliding_moves(const int& dx, const int& dy, std::vector<Location
   }
 }
 
+bool Piece::check_sliding_move(const Location& destination, const int& dx, const int& dy, const BoardView& board) const {
+  Location candidate(location.get_file() + dx, location.get_rank() + dy);
+  while(candidate != destination) {
+    if(board.is_occupied(candidate)) return false;
+    candidate.add_in_place(dx, dy);
+  }
+  return true;
+}
+
 Location Piece::get_location() const {
   return location;
 }

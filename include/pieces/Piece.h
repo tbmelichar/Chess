@@ -21,12 +21,13 @@ public:
   virtual bool move_to(const Location& destination, const BoardView& board);
   virtual void print() const;
   virtual std::string symbol() const = 0;
-  virtual std::string hollow_symbol() const = 0;
-  virtual std::string filled_symbol() const = 0;
+  virtual std::string get_hollow_symbol() const = 0;
+  virtual std::string get_filled_symbol() const = 0;
   virtual std::vector<Location> legal_moves(const BoardView& board) const = 0; 
   
   virtual bool can_move_to(const Location& destination, const BoardView& board) const;
   void add_sliding_moves(const int& dx, const int& dy, std::vector<Location>& moves, const BoardView& board) const;
+  bool check_sliding_move(const Location& destination, const int& dx, const int& dy, const BoardView& board) const;
 
   Location get_location() const;
   char get_colour() const;
