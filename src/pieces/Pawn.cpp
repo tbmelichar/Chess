@@ -19,9 +19,13 @@ Pawn::~Pawn() {
   Piece::~Piece();
 }
 
-std::string Pawn::symbol() const {
+std::string Pawn::get_symbol() const {
   char square_colour = location.get_square_colour();
   return {(colour == square_colour) ? "♙" : "♟"};
+}
+
+char Pawn::get_char() const {
+  return 'P';
 }
 
 std::string Pawn::get_hollow_symbol() const {

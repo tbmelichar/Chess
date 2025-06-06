@@ -17,7 +17,8 @@ const std::string Board::black = "\033[30m";            // just black foreground
 const std::string Board::selected = "\033[32m";         // just green foreground
 const std::string Board::capturable = "\033[31m";       // just red foreground
 
-Board::Board() {
+Board::Board(const bool& set_up) {
+  if(!set_up) {return;}
   add_piece(std::make_unique<Rook>(Location("a1"), 'w'));
   add_piece(std::make_unique<Knight>(Location("b1"), 'w'));
   add_piece(std::make_unique<Bishop>(Location("c1"), 'w'));
@@ -96,61 +97,30 @@ void Board::show() const {
       std::string square_colour(black_background);
       if(current.get_square_colour() == 'w') {piece_colour = black; square_colour = white_background;}
       
-      std::cout<<square_colour<<piece_colour<<" "<<(p ? p->symbol() : " ")<<" "<<reset;
+      std::cout<<square_colour<<piece_colour<<" "<<(p ? p->get_symbol() : " ")<<" "<<reset;
     }
     std::cout<<'\n';
   }
   std::cout<<"   a  b  c  d  e  f  g  h\n";
 }
 
-bool Board::is_enemy_rook_at(const Location& loc, const char& my_colour) const {
+bool Board::is_specific_enemy_at(const Location& loc, const char& my_colour, const char& piece_char) const {
   Piece* p = get_piece_at(loc);
   if(!p) {return false;}
   if(p->get_colour() == my_colour) {return false;}
-  if(p->get_hollow_symbol() == "♖") {return true;}
+  if(p->get_char() == piece_char) {return true;}
   return false;
 }
 
-bool Board::is_enemy_knight_at(const Location& loc, const char& my_colour) const {
+bool Board::is_specific_enemy_at(const Location& loc, const char& my_colour, const std::string& piece_chars) const {
   Piece* p = get_piece_at(loc);
   if(!p) {return false;}
   if(p->get_colour() == my_colour) {return false;}
-  if(p->get_hollow_symbol() == "♘") {return true;}
+  for(size_t i = 0; i < piece_chars.length(); i++) {
+    if(p->get_char() == piece_chars[i]) {return true;}
+  }
   return false;
 }
-
-bool Board::is_enemy_bishop_at(const Location& loc, const char& my_colour) const {
-  Piece* p = get_piece_at(loc);
-  if(!p) {return false;}
-  if(p->get_colour() == my_colour) {return false;}
-  if(p->get_hollow_symbol() == "♗") {return true;}
-  return false;
-}
-
-bool Board::is_enemy_queen_at(const Location& loc, const char& my_colour) const {
-  Piece* p = get_piece_at(loc);
-  if(!p) {return false;}
-  if(p->get_colour() == my_colour) {return false;}
-  if(p->get_hollow_symbol() == "♕") {return true;}
-  return false;
-}
-
-bool Board::is_enemy_king_at(const Location& loc, const char& my_colour) const {
-  Piece* p = get_piece_at(loc);
-  if(!p) {return false;}
-  if(p->get_colour() == my_colour) {return false;}
-  if(p->get_hollow_symbol() == "♔") {return true;}
-  return false;
-}
-
-bool Board::is_enemy_pawn_at(const Location& loc, const char& my_colour) const {
-  Piece* p = get_piece_at(loc);
-  if(!p) {return false;}
-  if(p->get_colour() == my_colour) {return false;}
-  if(p->get_hollow_symbol() == "♙") {return true;}
-  return false;
-}
-
 
 std::vector<Location> Board::legal_moves(const Location& loc) const {
   Piece* p = get_piece_at(loc);
@@ -167,7 +137,7 @@ void Board::show_legal_moves(const Location& loc) const {
     for (int file = 0; file < 8; ++file) {
       Location current(file, rank);
       Piece* p = squares[file][rank].get();
-      std::string symbol(p ? p->symbol() : " ");
+      std::string symbol(p ? p->get_symbol() : " ");
       std::string piece_colour(white); 
       std::string square_colour(black_background);
       if(current.get_square_colour() == 'w') {piece_colour = black; square_colour = white_background;}

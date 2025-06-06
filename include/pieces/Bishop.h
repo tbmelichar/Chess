@@ -11,7 +11,8 @@ public:
   Bishop(const Location& loc, const char& col);
   ~Bishop() override;
 
-  std::string symbol() const override;
+  std::string get_symbol() const override;
+  char get_char() const override;
   std::string get_hollow_symbol() const override;
   std::string get_filled_symbol() const override;
   void print() const override;

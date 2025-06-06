@@ -20,7 +20,8 @@ public:
 
   virtual bool move_to(const Location& destination, const BoardView& board);
   virtual void print() const;
-  virtual std::string symbol() const = 0;
+  virtual std::string get_symbol() const = 0;
+  virtual char get_char() const = 0;
   virtual std::string get_hollow_symbol() const = 0;
   virtual std::string get_filled_symbol() const = 0;
   virtual std::vector<Location> legal_moves(const BoardView& board) const = 0; 

@@ -11,7 +11,8 @@ public:
   King(const Location& loc, const char& col);
   ~King() override;
 
-  std::string symbol() const override;
+  std::string get_symbol() const override;
+  char get_char() const override;
   std::string get_hollow_symbol() const override;
   std::string get_filled_symbol() const override;
   void print() const override;
@@ -19,8 +20,9 @@ public:
   bool can_move_to(const Location& destination, const BoardView& board) const override;
   std::vector<Location> legal_moves(const BoardView& board) const override;
 
-  bool in_check_from_sliding_piece(const int& dx, const int& dy, const std::string& symbol, const BoardView& board) const;
-  bool in_check_from_rook(const BoardView& board) const;
+  bool in_check_from_sliding_piece(const int& dx, const int& dy, const char& enemy_char, const BoardView& board) const;
+  bool in_check_from_sliding_piece(const int& dx, const int& dy, const std::string& enemy_chars, const BoardView& board) const;
+  bool in_check(const BoardView& board) const;
   //bool in_check_from_knight(const BoardView& board) const;
   //bool in_check_from_bishop(const BoardView& board) const;
   //bool in_check_from_queen(const BoardView& board) const;

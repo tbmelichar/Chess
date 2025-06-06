@@ -15,12 +15,8 @@ public:
   virtual std::vector<Location> legal_moves(const Location&) const = 0;
   virtual size_t get_move_number() const = 0;
 
-  virtual bool is_enemy_rook_at(const Location& loc, const char& my_colour) const = 0;
-  virtual bool is_enemy_knight_at(const Location& loc, const char& my_colour) const = 0;
-  virtual bool is_enemy_bishop_at(const Location& loc, const char& my_colour) const = 0;
-  virtual bool is_enemy_queen_at(const Location& loc, const char& my_colour) const = 0;
-  virtual bool is_enemy_king_at(const Location& loc, const char& my_colour) const = 0;
-  virtual bool is_enemy_pawn_at(const Location& loc, const char& my_colour) const = 0;
+  virtual bool is_specific_enemy_at(const Location& loc, const char& my_colour, const char& piece_char) const = 0;
+  virtual bool is_specific_enemy_at(const Location& loc, const char& my_colour, const std::string& piece_chars) const = 0;
 
   virtual ~BoardView() = default;
 };

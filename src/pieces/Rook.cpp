@@ -19,9 +19,13 @@ Rook::~Rook() {
   Piece::~Piece();
 }
 
-std::string Rook::symbol() const {
+std::string Rook::get_symbol() const {
   char square_colour = location.get_square_colour();
   return {(colour == square_colour) ? "♖" : "♜"};
+}
+
+char Rook::get_char() const {
+  return 'R';
 }
 
 std::string Rook::get_hollow_symbol() const {

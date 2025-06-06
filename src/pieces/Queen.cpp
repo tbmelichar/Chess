@@ -19,9 +19,13 @@ Queen::~Queen() {
   Piece::~Piece();
 }
 
-std::string Queen::symbol() const {
+std::string Queen::get_symbol() const {
   char square_colour = location.get_square_colour();
   return {(colour == square_colour) ? "♕" : "♛"};
+}
+
+char Queen::get_char() const {
+  return 'Q';
 }
 
 std::string Queen::get_hollow_symbol() const {

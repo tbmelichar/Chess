@@ -20,7 +20,7 @@ private:
   static const std::string capturable;
 
 public:
-  Board();
+  Board(const bool& set_up = true);
   ~Board() = default;
 
   void show() const;
@@ -32,13 +32,8 @@ public:
   char get_colour_at(const Location& loc) const override;
   size_t get_move_number() const override;
 
-  bool is_enemy_rook_at(const Location& loc, const char& my_colour) const override;
-  bool is_enemy_knight_at(const Location& loc, const char& my_colour) const override;
-  bool is_enemy_bishop_at(const Location& loc, const char& my_colour) const override;
-  bool is_enemy_queen_at(const Location& loc, const char& my_colour) const override;
-  bool is_enemy_king_at(const Location& loc, const char& my_colour) const override;
-  bool is_enemy_pawn_at(const Location& loc, const char& my_colour) const override;
-
+  bool is_specific_enemy_at(const Location& loc, const char& my_colour, const char& piece_char) const override;
+  bool is_specific_enemy_at(const Location& loc, const char& my_colour, const std::string& piece_chars) const override;
 
   void set_move_number(const size_t& num);
 

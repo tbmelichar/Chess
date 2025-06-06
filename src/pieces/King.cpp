@@ -19,9 +19,13 @@ King::~King() {
   Piece::~Piece();
 }
 
-std::string King::symbol() const {
+std::string King::get_symbol() const {
   char square_colour = location.get_square_colour();
   return {(colour == square_colour) ? "♔" : "♚"};
+}
+
+char King::get_char() const {
+  return 'K';
 }
 
 std::string King::get_hollow_symbol() const {
@@ -63,6 +67,34 @@ std::vector<Location> King::legal_moves(const BoardView& board) const {
   return moves;
 }
 
-bool King::in_check_from_rook(const BoardView& board) const {
+bool King::in_check_from_sliding_piece(const int& dx, const int& dy, const char& enemy_char, const BoardView& board) const {
+  Location candidate(location.get_file() + dx, location.get_rank() + dy);
+  while(candidate.is_valid()) {
+    if(board.is_specific_enemy_at(candidate, colour, enemy_char)) {return true;}
+    if(board.is_occupied(candidate)) {return false;}
+    candidate.add_in_place(dx, dy);
+  }
+  return false;
+}
 
+bool King::in_check_from_sliding_piece(const int& dx, const int& dy, const std::string& enemy_chars, const BoardView& board) const {
+  Location candidate(location.get_file() + dx, location.get_rank() + dy);
+  while(candidate.is_valid()) {
+    if(board.is_specific_enemy_at(candidate, colour, enemy_chars)) {return true;}
+    if(board.is_occupied(candidate)) {return false;}
+    candidate.add_in_place(dx, dy);
+  }
+  return false;
+}
+
+bool King::in_check(const BoardView& board) const {
+  if(in_check_from_sliding_piece(1, 0, "QR", board)) {return true;}
+  if(in_check_from_sliding_piece(-1, 0, "QR", board)) {return true;}
+  if(in_check_from_sliding_piece(0, 1, "QR", board)) {return true;}
+  if(in_check_from_sliding_piece(0, -1, "QR", board)) {return true;}
+  if(in_check_from_sliding_piece(1, 1, "QB", board)) {return true;}
+  if(in_check_from_sliding_piece(1, -1, "QB", board)) {return true;}
+  if(in_check_from_sliding_piece(-1, 1, "QB", board)) {return true;}
+  if(in_check_from_sliding_piece(-1, -1, "QB", board)) {return true;}
+  return false;
 }

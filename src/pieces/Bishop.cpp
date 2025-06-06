@@ -19,9 +19,13 @@ Bishop::~Bishop() {
   Piece::~Piece();
 }
 
-std::string Bishop::symbol() const {
+std::string Bishop::get_symbol() const {
   char square_colour = location.get_square_colour();
   return {(colour == square_colour) ? "♗" : "♝"};
+}
+
+char Bishop::get_char() const {
+  return 'B';
 }
 
 std::string Bishop::get_hollow_symbol() const {

@@ -19,9 +19,13 @@ Knight::~Knight() {
   Piece::~Piece();
 }
 
-std::string Knight::symbol() const {
+std::string Knight::get_symbol() const {
   char square_colour = location.get_square_colour();
   return {(colour == square_colour) ? "♘" : "♞"};
+}
+
+char Knight::get_char() const {
+  return 'N';
 }
 
 std::string Knight::get_hollow_symbol() const {
