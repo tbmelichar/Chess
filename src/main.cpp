@@ -17,9 +17,10 @@ int main() {
   b.add_piece(std::make_unique<Rook>(Location(b), 'b'));
   b.add_piece(std::make_unique<Knight>(Location(b), 'b'));
   b.add_piece(std::make_unique<Bishop>(Location(b), 'b'));
-  b.add_piece(std::make_unique<Pawn>(Location(b), 'b'));
-  b.add_piece(std::make_unique<Pawn>(Location(b), 'b'));
   b.add_piece(std::make_unique<Queen>(Location(b), 'b'));
+  b.add_piece(std::make_unique<King>(Location(b), 'b'));
+  b.add_piece(std::make_unique<Pawn>(Location(b), 'b'));
+  b.add_piece(std::make_unique<Pawn>(Location(b), 'b'));
 
   b.show();
 
