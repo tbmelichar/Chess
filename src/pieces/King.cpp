@@ -87,14 +87,49 @@ bool King::in_check_from_sliding_piece(const int& dx, const int& dy, const std::
   return false;
 }
 
-bool King::in_check(const BoardView& board) const {
-  if(in_check_from_sliding_piece(1, 0, "QR", board)) {return true;}
-  if(in_check_from_sliding_piece(-1, 0, "QR", board)) {return true;}
-  if(in_check_from_sliding_piece(0, 1, "QR", board)) {return true;}
-  if(in_check_from_sliding_piece(0, -1, "QR", board)) {return true;}
-  if(in_check_from_sliding_piece(1, 1, "QB", board)) {return true;}
-  if(in_check_from_sliding_piece(1, -1, "QB", board)) {return true;}
-  if(in_check_from_sliding_piece(-1, 1, "QB", board)) {return true;}
-  if(in_check_from_sliding_piece(-1, -1, "QB", board)) {return true;}
+bool King::in_check_from_knight(const BoardView& board) const {
+  static const int dx[8] = {1,  1,  2,  2, -1, -1, -2, -2};
+  static const int dy[8] = {2, -2,  1, -1,  2, -2,  1, -1};
+ 
+  for (int i = 0; i < 8; ++i) {
+    Location candidate = location.add(dx[i], dy[i]);
+    if(candidate.is_valid() && board.is_specific_enemy_at(candidate, colour, 'N')) {return true;}
+  }
   return false;
 }
+
+bool King::in_check_from_pawn(const BoardView& board) const {
+  int sign = (colour == 'w') ? 1 : -1;
+  Location candidate = location.add(1, sign);
+  if(candidate.is_valid() && board.is_specific_enemy_at(candidate, colour, 'P')) {return true;}
+  candidate.add_in_place(-2, 0);
+  if(candidate.is_valid() && board.is_specific_enemy_at(candidate, colour, 'P')) {return true;}
+  return false;
+}
+
+bool King::in_check_from_king(const BoardView& board) const {
+  static const int dx[8] = {1,  1,  2,  2, -1, -1, -2, -2};
+  static const int dy[8] = {2, -2,  1, -1,  2, -2,  1, -1};
+  for (int i = 0; i < 8; ++i) {
+    Location candidate = location.add(dx[i], dy[i]);
+    if(candidate.is_valid() && board.is_specific_enemy_at(candidate, colour, 'K')) {return true;}
+  }
+  return false;
+}
+
+
+bool King::in_check(const BoardView& board) const {
+  if(in_check_from_sliding_piece(1,   0, "QR", board)) {return true;}
+  if(in_check_from_sliding_piece(-1,  0, "QR", board)) {return true;}
+  if(in_check_from_sliding_piece(0,   1, "QR", board)) {return true;}
+  if(in_check_from_sliding_piece(0,  -1, "QR", board)) {return true;}
+  if(in_check_from_sliding_piece(1,   1, "QB", board)) {return true;}
+  if(in_check_from_sliding_piece(1,  -1, "QB", board)) {return true;}
+  if(in_check_from_sliding_piece(-1,  1, "QB", board)) {return true;}
+  if(in_check_from_sliding_piece(-1, -1, "QB", board)) {return true;}
+  if(in_check_from_knight(board)) {return true;}
+  if(in_check_from_pawn(board)) {return true;}
+  if(in_check_from_king(board)) {return true;}
+  return false;
+}
+

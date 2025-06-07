@@ -1,6 +1,8 @@
 #include "Location.h"
+#include "BoardView.h"
 #include <stdexcept>
 #include <iostream>
+#include <random>
 
 Location::Location(const char& f, const char& r) : file(f), rank(r) {}
 
@@ -18,6 +20,18 @@ Location::Location(const std::string& loc) {
 Location::Location(const Location& loc) {
   file = loc.file;
   rank = loc.rank;
+}
+
+Location::Location(const BoardView& board) {
+  static std::random_device rd;
+  static std::mt19937 gen(rd());
+  static std::uniform_int_distribution<> distribution(0, 7);
+
+  while(true) {
+    file = 'a' + distribution(gen);
+    rank = '1' + distribution(gen);
+    if(!board.is_occupied(*this)) {return;}
+  }
 }
 
 

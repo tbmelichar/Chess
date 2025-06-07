@@ -23,11 +23,9 @@ public:
   bool in_check_from_sliding_piece(const int& dx, const int& dy, const char& enemy_char, const BoardView& board) const;
   bool in_check_from_sliding_piece(const int& dx, const int& dy, const std::string& enemy_chars, const BoardView& board) const;
   bool in_check(const BoardView& board) const;
-  //bool in_check_from_knight(const BoardView& board) const;
-  //bool in_check_from_bishop(const BoardView& board) const;
-  //bool in_check_from_queen(const BoardView& board) const;
-  //bool in_check_from_king(const BoardView& board) const;
-  //bool in_check_from_pawn(const BoardView& board) const;
+  bool in_check_from_knight(const BoardView& board) const;
+  bool in_check_from_king(const BoardView& board) const;
+  bool in_check_from_pawn(const BoardView& board) const;
 };
 
 #endif

@@ -1,8 +1,12 @@
 #ifndef LOCATION_H
 #define LOCATION_H
 
+//#include "BoardView.h"
+
 #include <string>
 #include <ostream>
+
+class BoardView; // Forward declaration
 
 class Location {
 private:
@@ -15,6 +19,7 @@ public:
   Location(const int& f, const int& r);
   Location(const std::string& loc);
   Location(const Location& loc);
+  Location(const BoardView& board); // Randomised constructor
   ~Location() = default;
 
   bool is_valid() const;
