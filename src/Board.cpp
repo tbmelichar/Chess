@@ -50,11 +50,17 @@ void Board::add_piece(std::unique_ptr<Piece> piece) {
 }
 
 Piece* Board::get_piece_at(const Location& loc) const {
-  return squares[loc.get_file()][loc.get_rank()].get();  // Return raw pointer
+  if(loc.is_valid()) {return squares[loc.get_file()][loc.get_rank()].get();}
+  return nullptr;
 }
 
 bool Board::is_occupied(const Location& loc) const {
   return get_piece_at(loc) != nullptr;
+}
+
+bool Board::is_friend_at(const Location& loc, const char& my_colour) const {
+  Piece* p = get_piece_at(loc);
+  return p && p->get_colour() == my_colour;
 }
 
 bool Board::is_enemy_at(const Location& loc, const char& my_colour) const {
@@ -73,13 +79,16 @@ size_t Board::get_move_number() const {
 }
 
 bool Board::move_piece(const Location& from, const Location& to) {
+
   int fx = from.get_file(), fy = from.get_rank();
   int tx = to.get_file(), ty = to.get_rank();
 
   if(!squares[fx][fy]) {return false;}
+  //std::cout<<"pllalaa ISSUE HERE\n";
   if(!squares[fx][fy]->can_move_to(to, *this)) {return false;}
 
   // Capture: just overwrite the destination square
+  //std::cout<<"pllalaa\n";
   squares[tx][ty] = std::move(squares[fx][fy]);
   squares[tx][ty]->set_location(to);
   squares[fx][fy].reset();
@@ -88,6 +97,7 @@ bool Board::move_piece(const Location& from, const Location& to) {
 }
 
 void Board::show() const {
+  std::cout<<"       "<<((move_number % 2 == 1) ? "White" : "Black")<<" to move"<<std::endl;
   for (int rank = 7; rank >= 0; --rank) {
     std::cout<<rank + 1<<" ";
     for (int file = 0; file < 8; ++file) {
@@ -131,7 +141,7 @@ std::vector<Location> Board::legal_moves(const Location& loc) const {
 void Board::show_legal_moves(const Location& loc) const {
   if(!is_occupied(loc)) return show();
   std::vector<Location> moves = legal_moves(loc);
-
+  std::cout<<"       "<<((move_number % 2 == 1) ? "White" : "Black")<<" to move"<<std::endl;
   for (int rank = 7; rank >= 0; rank--) {
     std::cout<<rank + 1<<" ";
     for (int file = 0; file < 8; ++file) {
@@ -166,3 +176,5 @@ void Board::print_legal_moves(const Location& loc) const {
 }
 
 void Board::set_move_number(const size_t& num) {move_number = num;}
+
+void Board::increment_move_number() {move_number++;}

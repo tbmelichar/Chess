@@ -94,3 +94,7 @@ void Location::operator=(const Location& other) {
 std::ostream& operator<<(std::ostream& os, const Location& loc) {
   return os << loc.to_string();
 }
+
+void Location::print() const {
+  std::cout<<file<<rank<<std::endl;
+}

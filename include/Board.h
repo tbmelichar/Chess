@@ -28,6 +28,7 @@ public:
   // Functions available to pieces
   Piece* get_piece_at(const Location& loc) const override;
   bool is_occupied(const Location& loc) const override;
+  bool is_friend_at(const Location& loc, const char& my_colour) const override;
   bool is_enemy_at(const Location& loc, const char& my_colour) const override;
   char get_colour_at(const Location& loc) const override;
   size_t get_move_number() const override;
@@ -36,6 +37,7 @@ public:
   bool is_specific_enemy_at(const Location& loc, const char& my_colour, const std::string& piece_chars) const override;
 
   void set_move_number(const size_t& num);
+  void increment_move_number();
 
   // Game logic
   bool move_piece(const Location& from, const Location& to);

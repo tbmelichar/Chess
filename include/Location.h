@@ -37,6 +37,8 @@ public:
   bool operator==(const Location& other) const;
   bool operator!=(const Location& other) const;
   void operator=(const Location& other);
+
+  void print() const;
 };
 
 std::ostream& operator<<(std::ostream& os, const Location& loc);

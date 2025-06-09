@@ -22,7 +22,7 @@ void Piece::print() const {
 }
 
 bool Piece::can_move_to(const Location& destination, const BoardView& board) const {
-  //if(colour == (board.get_move_number() % 2 == 1 ? 'b' : 'w')) {return false;}
+  if(colour == (board.get_move_number() % 2 == 1 ? 'b' : 'w')) {return false;}
   if(!destination.is_valid()) {return false;}
   if(board.get_colour_at(destination) == colour) {return false;}
   return true;
