@@ -14,8 +14,8 @@ int main() {
   //b.show();
   //b.move_piece(Location("e2"), Location("e5"));
   //b.show();
-  for (int i = 0; i < 15; ++i) {std::cout << "\n";}
-  for (int i = 0; i < 12; ++i) {std::cout << "\033[A\033[2K";}
+  for(int i = 0; i < 15; ++i) {std::cout << "\n";}
+  for(int i = 0; i < 12; ++i) {std::cout << "\033[A\033[2K";}
   Game g;
   g.show_board();
   for(int i = 0; i < 50; i++) {g.user_move();}

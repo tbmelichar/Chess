@@ -59,7 +59,7 @@ std::vector<Location> King::legal_moves(const BoardView& board) const {
  
   std::vector<Location> moves;
 
-  for (int i = 0; i < 8; ++i) {
+  for(int i = 0; i < 8; ++i) {
     Location candidate = location.add(dx[i], dy[i]);
     if(candidate.is_valid() && !board.is_friend_at(candidate, colour)) {moves.push_back(candidate);}
   }
@@ -91,7 +91,7 @@ bool King::in_check_from_knight(const BoardView& board) const {
   static const int dx[8] = {1,  1,  2,  2, -1, -1, -2, -2};
   static const int dy[8] = {2, -2,  1, -1,  2, -2,  1, -1};
  
-  for (int i = 0; i < 8; ++i) {
+  for(int i = 0; i < 8; ++i) {
     Location candidate = location.add(dx[i], dy[i]);
     if(candidate.is_valid() && board.is_specific_enemy_at(candidate, colour, 'N')) {return true;}
   }
@@ -110,7 +110,7 @@ bool King::in_check_from_pawn(const BoardView& board) const {
 bool King::in_check_from_king(const BoardView& board) const {
   static const int dx[8] = { 1, 1, 1, 0, -1, -1, -1,  0};
   static const int dy[8] = {-1, 0, 1, 1,  1,  0, -1, -1};
-  for (int i = 0; i < 8; ++i) {
+  for(int i = 0; i < 8; ++i) {
     Location candidate = location.add(dx[i], dy[i]);
     if(candidate.is_valid() && board.is_specific_enemy_at(candidate, colour, 'K')) {return true;}
   }

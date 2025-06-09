@@ -54,7 +54,7 @@ std::vector<Location> Knight::legal_moves(const BoardView& board) const {
  
   std::vector<Location> moves;
 
-  for (int i = 0; i < 8; ++i) {
+  for(int i = 0; i < 8; ++i) {
     Location candidate = location.add(dx[i], dy[i]);
     if(candidate.is_valid() && !board.is_friend_at(candidate, colour)) {moves.push_back(candidate);}
   }
