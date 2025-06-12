@@ -23,7 +23,6 @@ Board::Board(const bool& set_up) {
   add_piece(std::make_unique<Knight>(Location("b1"), 'w'));
   add_piece(std::make_unique<Bishop>(Location("c1"), 'w'));
   add_piece(std::make_unique<Queen>(Location("d1"), 'w'));
-  add_piece(std::make_unique<King>(Location("e1"), 'w'));
   add_piece(std::make_unique<Bishop>(Location("f1"), 'w'));
   add_piece(std::make_unique<Knight>(Location("g1"), 'w'));
   add_piece(std::make_unique<Rook>(Location("h1"), 'w'));
@@ -31,7 +30,6 @@ Board::Board(const bool& set_up) {
   add_piece(std::make_unique<Knight>(Location("b8"), 'b'));
   add_piece(std::make_unique<Bishop>(Location("c8"), 'b'));
   add_piece(std::make_unique<Queen>(Location("d8"), 'b'));
-  add_piece(std::make_unique<King>(Location("e8"), 'b'));
   add_piece(std::make_unique<Bishop>(Location("f8"), 'b'));
   add_piece(std::make_unique<Knight>(Location("g8"), 'b'));
   add_piece(std::make_unique<Rook>(Location("h8"), 'b'));
@@ -40,6 +38,14 @@ Board::Board(const bool& set_up) {
     add_piece(std::make_unique<Pawn>(Location(file, '2'), 'w'));
     add_piece(std::make_unique<Pawn>(Location(file, '7'), 'b'));
   }
+  
+  std::unique_ptr<King> wk = std::make_unique<King>(Location("e1"), 'w');
+  white_king = wk.get();
+  add_piece(std::move(wk));
+
+  std::unique_ptr<King> bk = std::make_unique<King>(Location("e8"), 'b');
+  black_king = bk.get();
+  add_piece(std::move(bk));
 }
 
 Board::Board(const Board& other) : move_number(other.move_number) {
@@ -52,6 +58,13 @@ Board::Board(const Board& other) : move_number(other.move_number) {
       }
     }
   }
+  int wk_file = other.white_king->get_location().get_file();
+  int wk_rank = other.white_king->get_location().get_rank();
+  white_king = static_cast<King*>(squares[wk_file][wk_rank].get());
+
+  int bk_file = other.black_king->get_location().get_file();
+  int bk_rank = other.black_king->get_location().get_rank();
+  black_king = static_cast<King*>(squares[bk_file][bk_rank].get());
 }
 
 void Board::add_piece(std::unique_ptr<Piece> piece) {
@@ -97,6 +110,16 @@ bool Board::move_piece(const Location& from, const Location& to) {
 
   if(!squares[fx][fy]) {return false;}
   if(!squares[fx][fy]->can_move_to(to, *this)) {return false;}
+
+  Board future(*this);
+  future.squares[tx][ty] = std::move(future.squares[fx][fy]);
+  future.squares[tx][ty]->set_location(to);
+  future.squares[fx][fy].reset();
+
+  if(move_number % 2 == 1) {
+    if(future.white_king->in_check(future)) {return false;}
+  }
+  else if(future.black_king->in_check(future)) {return false;}
 
   // Capture: just overwrite the destination square
   squares[tx][ty] = std::move(squares[fx][fy]);

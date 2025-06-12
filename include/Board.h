@@ -3,6 +3,8 @@
 
 #include "BoardView.h"
 #include "Piece.h"
+#include "King.h"
+
 #include <memory>
 #include <iostream>
 #include <iomanip>
@@ -10,6 +12,8 @@
 class Board : public BoardView {
 private:
   std::unique_ptr<Piece> squares[8][8];
+  King* white_king;
+  King* black_king;
   size_t move_number{1};
   static const std::string reset;
   static const std::string white_background;

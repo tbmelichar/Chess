@@ -10,14 +10,6 @@
 #include <memory>
 
 int main() {
-  Board b;
-  b.show();
-  b.move_piece(Location("e2"), Location("e4"));
-
-  b.show();
-  Board c(b);
-  c.show();
-  b.move_piece(Location("d2"), Location("d4"));
-  b.show();
-  c.show();
+  Game g;
+  g.play();
 }
