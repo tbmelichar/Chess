@@ -15,6 +15,10 @@ King::King(const Location& loc, const char& col)
 
 }
 
+std::unique_ptr<Piece> King::clone() const {
+  return std::make_unique<King>(location, colour);
+}
+
 King::~King() {
   Piece::~Piece();
 }

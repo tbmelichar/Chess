@@ -15,6 +15,10 @@ Knight::Knight(const Location& loc, const char& col)
 
 }
 
+std::unique_ptr<Piece> Knight::clone() const {
+  return std::make_unique<Knight>(location, colour);
+}
+
 Knight::~Knight() {
   Piece::~Piece();
 }

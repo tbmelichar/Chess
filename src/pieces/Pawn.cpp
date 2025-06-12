@@ -15,6 +15,10 @@ Pawn::Pawn(const Location& loc, const char& col)
 
 }
 
+std::unique_ptr<Piece> Pawn::clone() const {
+  return std::make_unique<Pawn>(location, colour);
+}
+
 Pawn::~Pawn() {
   Piece::~Piece();
 }

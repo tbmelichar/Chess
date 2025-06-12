@@ -21,6 +21,7 @@ private:
 
 public:
   Board(const bool& set_up = true);
+  Board(const Board& other);
   ~Board() = default;
 
   void show() const;
@@ -47,6 +48,7 @@ public:
 
   // Setup
   void add_piece(std::unique_ptr<Piece> piece);
+  
 };
 
 #endif

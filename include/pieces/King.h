@@ -9,6 +9,7 @@ public:
   King(const char& file, const char& rank, const char& col);
   King(const std::string& loc, const char& col);
   King(const Location& loc, const char& col);
+  std::unique_ptr<Piece> clone() const override;
   ~King() override;
 
   std::string get_symbol() const override;

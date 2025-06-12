@@ -13,6 +13,7 @@ public:
   Pawn(const char& file, const char& rank, const char& col);
   Pawn(const std::string& loc, const char& col);
   Pawn(const Location& loc, const char& col);
+  std::unique_ptr<Piece> clone() const override;
   ~Pawn() override;
 
   std::string get_symbol() const override;

@@ -4,8 +4,9 @@
 #include "Location.h"
 #include "BoardView.h"
 
-#include<iostream>
-#include<vector>
+#include <iostream>
+#include <vector>
+#include <memory>
 
 class Piece {
 protected:
@@ -17,6 +18,8 @@ public:
   Piece(const char& file, const char& rank, const char& col);
   Piece(const std::string& loc, const char& col);
   Piece(const Location& loc, const char& col);
+  virtual std::unique_ptr<Piece> clone() const = 0;
+  virtual ~Piece() {};
 
   virtual bool move_to(const Location& destination, const BoardView& board);
   virtual void print() const;
@@ -37,7 +40,6 @@ public:
   void set_location(const Location& loc);
   void set_colour(const char& col);
   
-  virtual ~Piece() {};
 };
 
 #endif

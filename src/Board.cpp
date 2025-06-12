@@ -42,6 +42,18 @@ Board::Board(const bool& set_up) {
   }
 }
 
+Board::Board(const Board& other) : move_number(other.move_number) {
+  for (int file = 0; file < 8; ++file) {
+    for (int rank = 0; rank < 8; ++rank) {
+      if (other.squares[file][rank]) {
+        squares[file][rank] = other.squares[file][rank]->clone();
+      } else {
+        squares[file][rank] = nullptr;
+      }
+    }
+  }
+}
+
 void Board::add_piece(std::unique_ptr<Piece> piece) {
   Location loc = piece->get_location();
   int f = loc.get_file();
@@ -84,11 +96,9 @@ bool Board::move_piece(const Location& from, const Location& to) {
   int tx = to.get_file(), ty = to.get_rank();
 
   if(!squares[fx][fy]) {return false;}
-  //std::cout<<"pllalaa ISSUE HERE\n";
   if(!squares[fx][fy]->can_move_to(to, *this)) {return false;}
 
   // Capture: just overwrite the destination square
-  //std::cout<<"pllalaa\n";
   squares[tx][ty] = std::move(squares[fx][fy]);
   squares[tx][ty]->set_location(to);
   squares[fx][fy].reset();

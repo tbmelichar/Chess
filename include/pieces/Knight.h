@@ -9,6 +9,7 @@ public:
   Knight(const char& file, const char& rank, const char& col);
   Knight(const std::string& loc, const char& col);
   Knight(const Location& loc, const char& col);
+  std::unique_ptr<Piece> clone() const override;
   ~Knight() override;
 
   std::string get_symbol() const override;

@@ -14,8 +14,20 @@ bool is_valid_square(const std::string& s) {
          s[1] >= '1' && s[1] <= '8';
 }
 
+Game::Game() {
+  for(int i = 0; i < 15; ++i) {std::cout << "\n";}
+  for(int i = 0; i < 12; ++i) {std::cout << "\033[A\033[2K";}
+  show_board();
+}
+
 void Game::show_board() const {
   board.show();
+}
+
+void Game::play() {
+  while(true) {
+    user_move();
+  }
 }
 
 

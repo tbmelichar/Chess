@@ -9,6 +9,7 @@ public:
   Rook(const char& file, const char& rank, const char& col);
   Rook(const std::string& loc, const char& col);
   Rook(const Location& loc, const char& col);
+  std::unique_ptr<Piece> clone() const override;
   ~Rook() override;
 
   std::string get_symbol() const override;

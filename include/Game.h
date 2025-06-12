@@ -9,9 +9,10 @@ private:
   Board board;
 
 public:
-  Game() = default;
+  Game();
   ~Game() {};
 
+  void play();
   void show_board() const;
 
   void user_move();

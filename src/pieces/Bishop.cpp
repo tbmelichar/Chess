@@ -15,6 +15,10 @@ Bishop::Bishop(const Location& loc, const char& col)
 
 }
 
+std::unique_ptr<Piece> Bishop::clone() const {
+  return std::make_unique<Bishop>(location, colour);
+}
+
 Bishop::~Bishop() {
   Piece::~Piece();
 }

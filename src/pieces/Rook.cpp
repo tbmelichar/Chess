@@ -15,6 +15,10 @@ Rook::Rook(const Location& loc, const char& col)
 
 }
 
+std::unique_ptr<Piece> Rook::clone() const {
+  return std::make_unique<Rook>(location, colour);
+}
+
 Rook::~Rook() {
   Piece::~Piece();
 }

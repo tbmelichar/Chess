@@ -9,6 +9,7 @@ public:
   Bishop(const char& file, const char& rank, const char& col);
   Bishop(const std::string& loc, const char& col);
   Bishop(const Location& loc, const char& col);
+  std::unique_ptr<Piece> clone() const override;
   ~Bishop() override;
 
   std::string get_symbol() const override;

@@ -15,6 +15,10 @@ Queen::Queen(const Location& loc, const char& col)
 
 }
 
+std::unique_ptr<Piece> Queen::clone() const {
+  return std::make_unique<Queen>(location, colour);
+}
+
 Queen::~Queen() {
   Piece::~Piece();
 }
