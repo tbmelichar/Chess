@@ -25,7 +25,17 @@ bool Piece::can_move_to(const Location& destination, const BoardView& board) con
   if(colour == (board.get_move_number() % 2 == 1 ? 'b' : 'w')) {return false;}
   if(!destination.is_valid()) {return false;}
   if(board.get_colour_at(destination) == colour) {return false;}
+  if(board.would_cause_check(location, destination)) {return false;}
   return true;
+}
+
+std::vector<Location> Piece::filter_legal_moves(const std::vector<Location>& moves, const BoardView& board) const {
+  std::vector<Location> legal_moves;
+  legal_moves.reserve(moves.size());
+  for(const auto& move : moves) {
+    if (!board.would_cause_check(location, move)) {legal_moves.push_back(move);}
+  }
+  return legal_moves;
 }
 
 void Piece::add_sliding_moves(const int& dx, const int& dy, std::vector<Location>& moves, const BoardView& board) const {

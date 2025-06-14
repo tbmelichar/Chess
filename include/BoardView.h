@@ -19,6 +19,8 @@ public:
   virtual bool is_specific_enemy_at(const Location& loc, const char& my_colour, const char& piece_char) const = 0;
   virtual bool is_specific_enemy_at(const Location& loc, const char& my_colour, const std::string& piece_chars) const = 0;
 
+  virtual bool would_cause_check(const Location& from, const Location& to) const = 0;
+
   virtual ~BoardView() = default;
 };
 

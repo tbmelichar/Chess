@@ -70,9 +70,10 @@ bool Bishop::can_move_to(const Location& destination, const BoardView& board) co
 
 std::vector<Location> Bishop::legal_moves(const BoardView& board) const {
   std::vector<Location> moves;
+  moves.reserve(13);
   add_sliding_moves(1, 1, moves, board);
   add_sliding_moves(-1, 1, moves, board);
   add_sliding_moves(-1, -1, moves, board);
   add_sliding_moves(1, -1, moves, board);
-  return moves;
+  return filter_legal_moves(moves, board);
 }

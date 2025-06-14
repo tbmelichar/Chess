@@ -73,6 +73,7 @@ bool Pawn::can_move_to(const Location& destination, const BoardView& board) cons
 std::vector<Location> Pawn::legal_moves(const BoardView& board) const {
   int sign = (colour == 'w') ? 1 : -1;
   std::vector<Location> moves;
+  moves.reserve(4);
   if(!board.is_occupied(location.add(0,sign))) {
     moves.push_back(location.add(0,sign));
     if(location.get_rank() == int(sign * -2.5 + 3.5) && !board.is_occupied(location.add(0,2*sign))) {moves.push_back(location.add(0,2*sign));}
@@ -82,6 +83,5 @@ std::vector<Location> Pawn::legal_moves(const BoardView& board) const {
 
   if(can_en_passent_right) {moves.push_back(location.add(sign,sign));}
   if(can_en_passent_left) {moves.push_back(location.add(-sign,sign));}
-
-  return moves;
+  return filter_legal_moves(moves, board);
 }

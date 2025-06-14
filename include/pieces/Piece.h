@@ -28,6 +28,7 @@ public:
   virtual std::string get_hollow_symbol() const = 0;
   virtual std::string get_filled_symbol() const = 0;
   virtual std::vector<Location> legal_moves(const BoardView& board) const = 0; 
+  std::vector<Location> filter_legal_moves(const std::vector<Location>& moves, const BoardView& board) const;
   
   virtual bool can_move_to(const Location& destination, const BoardView& board) const;
   void add_sliding_moves(const int& dx, const int& dy, std::vector<Location>& moves, const BoardView& board) const;

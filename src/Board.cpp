@@ -103,6 +103,21 @@ size_t Board::get_move_number() const {
   return move_number;
 }
 
+bool Board::would_cause_check(const Location& from, const Location& to) const {
+  int fx = from.get_file(), fy = from.get_rank();
+  int tx = to.get_file(), ty = to.get_rank();
+  Board future(*this);
+  future.squares[tx][ty] = std::move(future.squares[fx][fy]);
+  future.squares[tx][ty]->set_location(to);
+  future.squares[fx][fy].reset();
+
+  if(move_number % 2 == 1) {
+    if(future.white_king->in_check(future)) {return true;}
+  }
+  else if(future.black_king->in_check(future)) {return true;}
+  return false;
+}
+
 bool Board::move_piece(const Location& from, const Location& to) {
 
   int fx = from.get_file(), fy = from.get_rank();
@@ -110,16 +125,6 @@ bool Board::move_piece(const Location& from, const Location& to) {
 
   if(!squares[fx][fy]) {return false;}
   if(!squares[fx][fy]->can_move_to(to, *this)) {return false;}
-
-  Board future(*this);
-  future.squares[tx][ty] = std::move(future.squares[fx][fy]);
-  future.squares[tx][ty]->set_location(to);
-  future.squares[fx][fy].reset();
-
-  if(move_number % 2 == 1) {
-    if(future.white_king->in_check(future)) {return false;}
-  }
-  else if(future.black_king->in_check(future)) {return false;}
 
   // Capture: just overwrite the destination square
   squares[tx][ty] = std::move(squares[fx][fy]);

@@ -63,9 +63,10 @@ bool Rook::can_move_to(const Location& destination, const BoardView& board) cons
 
 std::vector<Location> Rook::legal_moves(const BoardView& board) const {
   std::vector<Location> moves;
+  moves.reserve(14);
   add_sliding_moves(1, 0, moves, board);
   add_sliding_moves(-1, 0, moves, board);
   add_sliding_moves(0, 1, moves, board);
   add_sliding_moves(0, -1, moves, board);
-  return moves;
+  return filter_legal_moves(moves, board);
 }

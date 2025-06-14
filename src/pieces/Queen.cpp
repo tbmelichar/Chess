@@ -71,6 +71,7 @@ bool Queen::can_move_to(const Location& destination, const BoardView& board) con
 
 std::vector<Location> Queen::legal_moves(const BoardView& board) const {
   std::vector<Location> moves;
+  moves.reserve(27);
   add_sliding_moves(1, 1, moves, board);
   add_sliding_moves(-1, 1, moves, board);
   add_sliding_moves(-1, -1, moves, board);
@@ -79,5 +80,5 @@ std::vector<Location> Queen::legal_moves(const BoardView& board) const {
   add_sliding_moves(-1, 0, moves, board);
   add_sliding_moves(0, 1, moves, board);
   add_sliding_moves(0, -1, moves, board);
-  return moves;
+  return filter_legal_moves(moves, board);
 }

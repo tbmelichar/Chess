@@ -52,6 +52,9 @@ public:
 
   // Setup
   void add_piece(std::unique_ptr<Piece> piece);
+
+  bool would_cause_check(const Location& from, const Location& to) const override;
+
   
 };
 
